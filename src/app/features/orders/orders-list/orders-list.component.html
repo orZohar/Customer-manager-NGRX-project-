@@ -1,0 +1,48 @@
+<div class="customers view indent">
+    <div class="container">
+
+        <br />
+        <div *ngIf="customers$ | async as customers">
+            <div class="container">
+                <div *ngIf="customers">
+                    <!-- ;trackBy:trackbyService.customer -->
+                    <div class="row" *ngFor="let customer of customers">
+                        <h4>{{ customer.firstName | capitalize }} {{ customer.lastName | capitalize }}</h4>
+                        <br />
+                        <!-- trackBy:trackbyService.order -->
+                        <table *ngIf="customers$ | async as customers"
+                            class="table table-striped table-hover orders-table">
+
+                            <!-- customer.orders; -->
+                            <div *ngIf="orders$ | async as orders">
+                                <tr *ngFor="let order of orders">
+                                    <div *ngIf="order.customerId === customer.id">
+                                        <td>{{order.productName}}</td>
+                                        <td class="text-right">{{ order.itemPrice | currency:'USD':'symbol' }}</td>
+                                    </div>
+                                </tr>
+                            </div>
+                            <tr class="summary-border">
+                                <td>&nbsp;</td>
+                                <td class="text-right">{{ customer.ordersTotal | currency:'USD':'symbol' }}
+                            </tr>
+                        </table>
+
+                        <div *ngIf="!customer.orders || !customer.orders.length">
+                            No orders found
+                        </div>
+                    </div>
+
+                    <!-- <cm-pagination [hidden]="!customers"
+                    [totalItems]="totalRecords" 
+                    [pageSize]="pageSize" 
+                    (pageChanged)="pageChanged($event)"></cm-pagination> -->
+                </div>
+            </div>
+            <div *ngIf="!customers">
+                No customers found
+            </div>
+        </div>
+
+    </div>
+</div>

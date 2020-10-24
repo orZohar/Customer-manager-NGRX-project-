@@ -1,0 +1,49 @@
+
+<!-- <p-tabView (onChange)="onChangeTab($event)">
+    <p-tabPanel header="Customer's list">
+        <div *ngIf="customers$ | async as customers">
+            <app-customers-list [customers]="customers"></app-customers-list>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="New Customer">
+      New Customer
+      <new-customer></new-customer>
+    </p-tabPanel>
+</p-tabView> -->
+
+<!-- <router-outlet></router-outlet> -->
+
+
+<div class="orders view">
+    <div class="container">
+        <header>
+            <h3><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Customer Information</h3>
+        </header>
+        <br />
+        <div class="navbar">
+            <ul class="nav navbar-nav">
+                <li class="toolbar-item">
+                    <a routerLink="" routerLinkActive="active">
+                       <span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Customers list
+                    </a>
+                </li>
+                <li class="toolbar-item">
+                    <a routerLink="new" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Customer
+                    </a>
+                </li>
+                <!-- <li class="toolbar-item">
+                    <a routerLink="edit" routerLinkActive="active">
+                        <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit Customer
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+        <div class="container">
+            <router-outlet></router-outlet>
+            <br />
+            <br />
+            <!-- <a routerLink="/customers">View all Customers</a> -->
+        </div>
+    </div>
+</div>

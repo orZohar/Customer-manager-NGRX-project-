@@ -1,0 +1,30 @@
+<div *ngIf="customers$ | async as customers" >
+    <!-- <app-customers-list [customers]="customers"></app-customers-list> -->
+    <p-table [value]="customers" styleClass="p-datatable-striped" >
+        <ng-template pTemplate="header">
+            <tr class="tr-options">
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Order total</th>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr class="tr-options">
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.city}}</td>
+                <td>{{customer.ordersTotal}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                        (click)="editCustomer(customer)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteCustomer(customer)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

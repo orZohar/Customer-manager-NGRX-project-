@@ -1,0 +1,35 @@
+
+
+.header{
+    font-size:14px;
+    height: 42px; 
+    background-color: #323232; 
+    display:flex;
+    flex-direction: row;
+    //justify-content: flex-end; // all childs to the left
+    align-items: center; // it's vertically centers the items to be on the same line of their center
+
+&--item {
+    padding: 0 1rem;
+    cursor: pointer;
+    height:100%;
+    color: white;
+    display: flex;
+    align-items: center; // we align the items along the cross axis vertically 
+}
+
+& > *:hover {
+    color: orange;
+}
+
+}
+a {
+    color: #FFF;
+  }
+  a:hover {
+     color: #00F
+  }
+.router-link-active {
+	color: #000;
+	font-weight: bold;
+}
