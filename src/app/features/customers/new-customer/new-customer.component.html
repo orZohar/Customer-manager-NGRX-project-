@@ -18,7 +18,9 @@
       <div class="form-group">
         <label>Email</label>
         <input type="text" class="form-control" name="email" formControlName="email"  required>
-        <div class="alert alert-danger" [hidden]="customerForm.controls.email.pristine || customerForm.controls.email.valid">Email is required</div>
+        <div class="alert alert-danger" [hidden]="customerForm.controls.email.untouched || customerForm.controls.email.valid">
+          {{getValidationMessage('invalidEmailAddress')}}
+        </div>
       </div>
       <div class="form-group">
         <label>Address</label>

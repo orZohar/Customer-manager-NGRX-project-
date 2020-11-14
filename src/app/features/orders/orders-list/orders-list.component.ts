@@ -23,11 +23,6 @@ export class OrdersListComponent implements OnInit {
       return customersArray;
     }))
 
-    // ).subscribe(result=> { 
-
-    // })
-  
-
 
   customers$ : Observable<Customer[]> = this.store$.pipe(
     select('entityCache', 'Customer', 'entities'),

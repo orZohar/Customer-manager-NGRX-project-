@@ -47,3 +47,18 @@ exports.orders_getAll = (req, res, next) => {
     }).catch(err =>
         res.status(500).json({ error: err }));
 }
+
+
+exports.orders_delete = (req, res, next) => {
+    Order.remove({ id: req.params.id }).exec()
+        .then(result => {
+            res.status(200).json({
+                message: "Order deleted"
+            });
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+}

@@ -10,7 +10,8 @@ import {MenuItem} from 'primeng/api';
 import {CapitalizePipe} from './pipes/capitalize.pipe';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {OrderListModule} from 'primeng/orderlist';
-
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 @NgModule({
   declarations: [CapitalizePipe],
@@ -24,7 +25,8 @@ import {OrderListModule} from 'primeng/orderlist';
     TabMenuModule,
     AutoCompleteModule,
     ReactiveFormsModule,
-    OrderListModule
+    OrderListModule,
+    ConfirmDialogModule
     
   ],
   exports: [
@@ -38,7 +40,9 @@ import {OrderListModule} from 'primeng/orderlist';
     ButtonModule,
     AutoCompleteModule,
     CapitalizePipe,
-    OrderListModule
-  ]
+    OrderListModule,
+    ConfirmDialogModule
+  ],
+  providers: [ConfirmationService]
 })
 export class SharedModule { }

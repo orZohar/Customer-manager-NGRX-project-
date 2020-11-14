@@ -4,7 +4,7 @@ var ordersRouter = express.Router();
 
 ordersRouter.get('', ordersController.orders_getAll);
 ordersRouter.post('', ordersController.orders_add);
-// customersRouter.delete('/:id', customersController.customers_delete);
+ordersRouter.delete('/:id', ordersController.orders_delete);
 // customersRouter.put('/:id', ordersController.customers_update);
 
 module.exports = ordersRouter;

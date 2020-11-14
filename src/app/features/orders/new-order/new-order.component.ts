@@ -8,7 +8,7 @@ import { Customer, Order } from 'src/app/shared/interfaces';
 import { OrdersService } from '../../orders/orders.service';
 import { CustomersService } from '../../customers/customers.service';
 import { Dictionary } from '@ngrx/entity';
-import {setNewOrder} from '../actions/orders.actions';
+import { setNewOrder } from '../actions/orders.actions';
 import { pushNewOrder } from '../../customers/actions/customers.actions';
 
 @Component({
@@ -26,7 +26,7 @@ export class NewOrderComponent implements OnInit {
       id: null,
       productName: '',
       itemPrice: null,
-    //  dateOfPurchase: '',
+      //  dateOfPurchase: '',
       quantity: null,
       totalPrice: null,
       customerId: null,
@@ -38,7 +38,7 @@ export class NewOrderComponent implements OnInit {
 
   orderForm: FormGroup;
   editCustomerId: number;
-  
+
   text: string;
   results: Customer[];
   filteredCustomers: any[];
@@ -56,29 +56,30 @@ export class NewOrderComponent implements OnInit {
         }
         return customersArray;
       })
-    ).subscribe(result =>{
+    ).subscribe(result => {
       this.results = result;
 
       this.filterCustomers(event);
     })
-   
+
   }
 
   filterCustomers(event) {
+    console.log("hello")
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
-    let filtered : any[] = [];
+    let filtered: any[] = [];
     let query = event.query;
-    for(let i = 0; i < this.results.length; i++) {
-        let firstName = this.results[i].firstName;
-        let lastName = this.results[i].lastName;
-        if (firstName.toLowerCase().indexOf(query.toLowerCase()) == 0 || lastName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-          var fullname = this.results[i].firstName + " " + this.results[i].lastName;
-          filtered.push(fullname);
-          this.currentCustomerId = this.results[i].id;
-        }
+    for (let i = 0; i < this.results.length; i++) {
+      let firstName = this.results[i].firstName;
+      let lastName = this.results[i].lastName;
+      if (firstName.toLowerCase().indexOf(query.toLowerCase()) == 0 || lastName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        var fullname = this.results[i].firstName + " " + this.results[i].lastName;
+        filtered.push(fullname);
+        this.currentCustomerId = this.results[i].id;
+      }
     }
     this.filteredCustomers = filtered;
-}
+  }
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -101,7 +102,7 @@ export class NewOrderComponent implements OnInit {
     // since param won't be changing while component is alive.
     // Could use this.route.parent.snapshot.params["id"] to simplify it.
     this.route.params.subscribe((params: Params) => {
-      this.editCustomerId =+params['id'];
+      this.editCustomerId = +params['id'];
 
       this.order$ = this.store$.pipe(
         select('entityCache', 'Order', 'entities', this.editCustomerId),
@@ -121,8 +122,8 @@ export class NewOrderComponent implements OnInit {
     // this.dataService.getStates().subscribe((states: IState[]) => this.states = states);
   }
 
-  
-  assignFullNameToId(event){
+
+  assignFullNameToId(event) {
     // we do this to present fullname in primeNG, it will be converted later to id before sending to the server
     this.orderForm.controls.id.setValue(event);
   }
@@ -147,13 +148,13 @@ export class NewOrderComponent implements OnInit {
     //   });
     // } else {
 
-      this.ordersService.add(obj).subscribe((result: Order) => {
-        //this.CustomersService.updateOneInCache(obj);
-       // this.store$.dispatch(setNewOrder({ id: result.id }))
-       // this.store$.dispatch(pushNewOrder({ order: result }))
-        this.router.navigate(['/orders']);
-      });
-   // }
+    this.ordersService.add(obj).subscribe((result: Order) => {
+
+      // it's either call all customers again because they were updated in the server, or update the store temporarliy.. what's the best practice?
+      this.CustomersService.getAll();
+      this.router.navigate(['/orders']);
+    });
+    // }
   }
   //cancel(event: Event) {
   //   event.preventDefault();

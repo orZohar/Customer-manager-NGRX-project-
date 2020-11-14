@@ -10,7 +10,7 @@
                         <h4>{{ customer.firstName | capitalize }} {{ customer.lastName | capitalize }}</h4>
                         <br />
                         <!-- trackBy:trackbyService.order -->
-                        <table *ngIf="customers$ | async as customers"
+                        <table 
                             class="table table-striped table-hover orders-table">
 
                             <!-- customer.orders; -->

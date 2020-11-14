@@ -9,7 +9,7 @@ import { setNewCustomer } from '../actions/customers.actions';
 import { Observable } from 'rxjs';
 import { Dictionary } from '@ngrx/entity';
 import { map } from 'rxjs/operators';
-import { ConstantPool } from '@angular/compiler';
+import { ValidationService } from '../../../core/services/validation.service';
 @Component({
   selector: 'new-customer',
   templateUrl: './new-customer.component.html',
@@ -35,7 +35,7 @@ export class NewCustomerComponent implements OnInit {
   deleteMessageEnabled: boolean;
   operationText = 'Insert';
   customerForm: FormGroup;
-  editCustomerId: number; 
+  editCustomerId: number;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class NewCustomerComponent implements OnInit {
       'lastName': ['', Validators.required],
       'address': ['', Validators.required],
       'city': ['', Validators.required],
-      'email': ['', Validators.required]
+      'email': ['', [Validators.required, ValidationService.emailValidator.bind(this)]],
     });
   }
 
@@ -57,7 +57,7 @@ export class NewCustomerComponent implements OnInit {
     // since param won't be changing while component is alive.
     // Could use this.route.parent.snapshot.params["id"] to simplify it.
     this.route.params.subscribe((params: Params) => {
-      this.editCustomerId =+params['id'];
+      this.editCustomerId = +params['id'];
 
       this.customer$ = this.store$.pipe(
         select('entityCache', 'Customer', 'entities', this.editCustomerId),
@@ -78,6 +78,11 @@ export class NewCustomerComponent implements OnInit {
     // this.dataService.getStates().subscribe((states: IState[]) => this.states = states);
   }
 
+  
+  getValidationMessage(errorType) {
+    return ValidationService.getValidatorErrorMessage(errorType)
+  }
+
   getCustomer(id: number) {
     // this.dataService.getCustomer(id).subscribe((customer: Customer) => {
     //    this.customer = customer;
@@ -92,18 +97,18 @@ export class NewCustomerComponent implements OnInit {
 
 
     const credentials = this.customerForm.value;
-    
+
     if (this.operationText === "Update") {
       credentials.id = this.editCustomerId;
       this.customersService.update(credentials).subscribe((result: any) => {
-      // this.store$.dispatch(setNewCustomer({ id: credentials.id  }))
-       this.router.navigate(['/customers']);
+        // this.store$.dispatch(setNewCustomer({ id: credentials.id  }))
+        this.router.navigate(['/customers']);
 
       });
 
     } else {
       this.customersService.add(credentials).subscribe((result: Customer) => {
-      // this.store$.dispatch(setNewCustomer({ id: result.id }))
+        // this.store$.dispatch(setNewCustomer({ id: result.id }))
         this.router.navigate(['/customers']);
       });
     }
@@ -141,4 +146,7 @@ export class NewCustomerComponent implements OnInit {
   // };
   // return this.modalService.show(modalContent);
   //}
+
+
+
 }
